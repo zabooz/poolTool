@@ -26,9 +26,19 @@
   font-size: calc(.5rem + 1vw);
   position: absolute;
   bottom: 0;
-  left: 10%;
+  
   color: white;
   z-index: 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: end;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 60%, rgba(0,0,0,0.7373074229691876) 94%);
+  padding-left: .8rem;
+  border: 1px solid #000;
+  
+
 
 }
 .uk-overlay-primary{
