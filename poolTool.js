@@ -126,7 +126,7 @@ const poolTool = {
       "uk-width-1-2@m",
       "uk-flex-align-items"
     );
-    
+
     contentContainer.appendChild(chartDiv);
   },
   createDescription: (descriptionText) => {
@@ -175,8 +175,6 @@ const poolTool = {
       img.alt = pool.name;
       img.style.width = "100%";
       img.style.transition = "transform 0.5s ease";
-      
-  
 
       const imgText = document.createElement("div");
       imgText.id = "imgText";
@@ -184,29 +182,27 @@ const poolTool = {
       imgText.innerText = pool.name;
 
       const overlay = document.createElement("div");
-      overlay.classList.add("uk-overlay", "uk-overlay-primary", "uk-position-cover");
+      overlay.classList.add(
+        "uk-overlay",
+        "uk-overlay-primary",
+        "uk-position-cover"
+      );
       overlay.style.opacity = "0";
       overlay.style.transition = "opacity 0.5s ease";
 
-      imageContainer.append(img, imgText,overlay);
+      imageContainer.append(img, imgText, overlay);
 
       imageContainer.addEventListener("mouseenter", () => {
         img.style.transform = "scale(1.2)";
         overlay.style.opacity = ".9";
- 
-
-        
       });
       imageContainer.addEventListener("mouseleave", () => {
         img.style.transform = "scale(1)";
         overlay.style.opacity = "0";
-
       });
 
       imageContainer.addEventListener("click", () => {
-        chart === undefined
-          ? poolTool.createChart(pool)
-          : null;
+        chart === undefined ? poolTool.createChart(pool) : null;
 
         poolTool.updateRenders(imageContainer, pool);
       });
@@ -214,25 +210,25 @@ const poolTool = {
       imageGrid.appendChild(imageContainer);
     });
   },
-  
-    updateRenders: (imgCon, poolType) => {
-      const imgConArr = document.querySelectorAll(".image-container");
-  
-      if (imgCon.classList.contains("clicked")) {
-        imgCon.classList.remove("clicked");
-  
-        poolTool.createDescription(config.lang.noSelection);
-        poolTool.createInfoText(config);
-        chart = undefined;
-      } else {
-        imgConArr.forEach((con) => {
-          con.classList.remove("clicked");
-        });
-        imgCon.classList.add("clicked");
-        poolTool.updateChart(poolType);
-        poolTool.createDescription(poolType.description);
-      }
-    },
+
+  updateRenders: (imgCon, poolType) => {
+    const imgConArr = document.querySelectorAll(".image-container");
+
+    if (imgCon.classList.contains("clicked")) {
+      imgCon.classList.remove("clicked");
+
+      poolTool.createDescription(config.lang.noSelection);
+      poolTool.createInfoText(config);
+      chart = undefined;
+    } else {
+      imgConArr.forEach((con) => {
+        con.classList.remove("clicked");
+      });
+      imgCon.classList.add("clicked");
+      poolTool.updateChart(poolType);
+      poolTool.createDescription(poolType.description);
+    }
+  },
   createChart: (poolType) => {
     const chartDiv = document.querySelector("#chartDiv");
     const labels = Object.keys(poolType).filter(
@@ -253,13 +249,16 @@ const poolTool = {
         : window.innerWidth < 640
         ? 450
         : window.innerWidth < 855
-        ? 140 :
-          130
-    barThickness = 
-        window.innerWidth < 640 ? 30 
-        : window.innerWidth < 855 ? 12
-        : window.innerWidth < 1100 ? 15
-        : 20
+        ? 140
+        : 130;
+    barThickness =
+      window.innerWidth < 640
+        ? 30
+        : window.innerWidth < 855
+        ? 12
+        : window.innerWidth < 1100
+        ? 15
+        : 20;
 
     const ctx = document.createElement("canvas");
     ctx.id = "myChart";
