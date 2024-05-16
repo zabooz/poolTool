@@ -243,15 +243,22 @@ const poolTool = {
     const backgroundColor = poolType.color;
 
     height =
-      window.innerWidth < 400
+      window.innerWidth < 450
         ? 300
-        : window.innerWidth < 640
+        : window.innerWidth < 450
         ? 400
-        : window.innerWidth < 900
-        ? 150
-        : 120;
-    barThickness =
-      window.innerWidth < 400 ? 15 : window.innerWidth < 640 ? 25 : 15;
+        : window.innerWidth < 500
+        ? 400
+        : window.innerWidth < 640
+        ? 450
+        : window.innerWidth < 855
+        ? 140 :
+          130
+    barThickness = 
+        window.innerWidth < 640 ? 30 
+        : window.innerWidth < 855 ? 12
+        : window.innerWidth < 1100 ? 15
+        : 20
 
     const ctx = document.createElement("canvas");
     ctx.id = "myChart";

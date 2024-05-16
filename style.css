@@ -28,6 +28,7 @@
   bottom: 0;
   left: 10%;
   color: white;
+  z-index: 1;
 
 }
 .uk-overlay-primary{
