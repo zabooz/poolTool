@@ -169,7 +169,6 @@ const poolTool = {
       imageContainer.style.overflow = "hidden";
       imageContainer.style.cursor = "pointer";
       imageContainer.style.position = "relative";
-      imageContainer.style.background= "linear-gradient(180deg, rgba(7,107,152,0) 0%, rgba(72,128,150,1) 80%, rgba(0,0,0,0.5019257703081232) 100%)";
 
       const img = document.createElement("img");
       img.src = pool.image;
