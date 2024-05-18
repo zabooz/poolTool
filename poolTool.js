@@ -201,34 +201,57 @@ const poolTool = {
         overlay.style.opacity = "0";
       });
 
-      imageContainer.addEventListener("click", () => {
-        chart === undefined ? poolTool.createChart(pool) : null;
+      const border = document.createElement("div");
+      border.className = "border hidden borderDiv";
 
-        poolTool.updateRenders(imageContainer, pool);
+      const borderCon = document.createElement("div");
+      borderCon.classList.add(
+        "borderContainer",
+        "uk-width-1-3",
+        "uk-flex-center",
+        "uk-flex-middle",
+        "uk-width-auto@s"
+      );
+      borderCon.append(imageContainer, border);
+
+      borderCon.addEventListener("click", () => {
+        chart === undefined ? poolTool.createChart(pool) : null;
+        poolTool.updateRenders(borderCon, pool);
       });
 
-      imageGrid.appendChild(imageContainer);
+      imageGrid.appendChild(borderCon);
     });
   },
+updateRenders: (borderCon, poolType) => {
+    const imgConArr = document.querySelectorAll(".borderContainer");
 
-  updateRenders: (imgCon, poolType) => {
-    const imgConArr = document.querySelectorAll(".image-container");
+    let isSelected = false;
 
-    if (imgCon.classList.contains("clicked")) {
-      imgCon.classList.remove("clicked");
+    imgConArr.forEach((con) => {
+        const borderDiv = con.querySelector(".borderDiv");
+        if (borderDiv.classList.contains("visible")) {
+            if (con === borderCon) {
+                isSelected = true; 
+            }
+            borderDiv.classList.remove("visible");
+            borderDiv.classList.add("hidden");
+        }
+    });
 
-      poolTool.createDescription(config.lang.noSelection);
-      poolTool.createInfoText(config);
-      chart = undefined;
+    if (!isSelected) {
+        const borderDiv = borderCon.querySelector(".borderDiv");
+        borderDiv.classList.add("visible");
+        borderDiv.classList.remove("hidden");
+        poolTool.updateChart(poolType);
+        poolTool.createDescription(poolType.description);
     } else {
-      imgConArr.forEach((con) => {
-        con.classList.remove("clicked");
-      });
-      imgCon.classList.add("clicked");
-      poolTool.updateChart(poolType);
-      poolTool.createDescription(poolType.description);
+        poolTool.createDescription(config.lang.noSelection);
+        poolTool.createInfoText(config);
+        chart = undefined;
     }
-  },
+},
+
+
   createChart: (poolType) => {
     const chartDiv = document.querySelector("#chartDiv");
     const labels = Object.keys(poolType).filter(
@@ -241,9 +264,7 @@ const poolTool = {
 
     height =
       window.innerWidth < 450
-        ? 300
-        : window.innerWidth < 450
-        ? 400
+        ? 320
         : window.innerWidth < 500
         ? 400
         : window.innerWidth < 640
