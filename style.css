@@ -73,7 +73,9 @@
   .borderContainer{
     width: 70%;
   }
-  
+  #header{
+    height: 3rem;
+  }
   .responsive-font-size {
     font-size: calc(1rem + 0.2vw);
     line-height: calc(1rem + 5vw);
