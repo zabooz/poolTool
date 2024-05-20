@@ -59,7 +59,7 @@
     font-size: calc(.6rem + .5vw);
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 960px) {
   .uk-flex-responsive {
     flex-direction: column;
     gap: 0;
@@ -73,15 +73,18 @@
   .borderContainer{
     width: 70%;
   }
-  .image-container {
-    width: 100%;
-  }
+  
   .responsive-font-size {
     font-size: calc(1rem + 0.2vw);
     line-height: calc(1rem + 5vw);
   }
   .imgText-style {
     font-size: calc(.5rem + 1vw);
+  }
+}
+@media (max-width: 640px){
+  img{
+    width:150px
   }
 }
 @media (max-width: 450px) {

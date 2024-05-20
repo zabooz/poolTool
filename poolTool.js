@@ -95,7 +95,6 @@ const poolTool = {
       "uk-flex-align-items",
       "uk-grid-small@s"
     );
-
     mainDiv.appendChild(contentContainer);
 
     const imageGrid = document.createElement("div");
@@ -110,8 +109,8 @@ const poolTool = {
       "uk-flex-responsive",
       "uk-flex-align-items",
       "uk-width-2-3@m",
-      "uk-width-2-3@s",
-      "uk-width-1-3s"
+      "uk-width-1-2@s",
+      "uk-width-1-1"
     );
 
     poolTool.createImage(imageGrid);
@@ -127,6 +126,7 @@ const poolTool = {
       "uk-flex-align-items"
     );
 
+    
     contentContainer.appendChild(chartDiv);
   },
   createDescription: (descriptionText) => {
@@ -160,7 +160,7 @@ const poolTool = {
       const imageContainer = document.createElement("div");
       imageContainer.classList.add(
         "image-container",
-        "uk-width-1-3",
+        "uk-width-1-1",
         "uk-flex-center",
         "uk-flex-middle",
         "uk-width-auto@s"
@@ -254,6 +254,7 @@ updateRenders: (borderCon, poolType) => {
 
   createChart: (poolType) => {
     const chartDiv = document.querySelector("#chartDiv");
+    const imageGrid = document.querySelector("#imageGrid");
     const labels = Object.keys(poolType).filter(
       (key) => typeof poolType[key] === "number"
     );
@@ -262,28 +263,83 @@ updateRenders: (borderCon, poolType) => {
     );
     const backgroundColor = poolType.color;
 
-    height =
-      window.innerWidth < 450
-        ? 320
-        : window.innerWidth < 500
-        ? 400
-        : window.innerWidth < 640
-        ? 450
-        : window.innerWidth < 855
-        ? 140
-        : 130;
     barThickness =
       window.innerWidth < 640
         ? 30
         : window.innerWidth < 855
-        ? 12
-        : window.innerWidth < 1100
-        ? 15
-        : 20;
+        ? 25
+        : window.innerWidth < 960
+        ? 25
+        : window.innerWidth < 1280
+        ? 25
+        : 15
+
+
+    if(window .innerWidth < 960 || window.innerWidth > 1280) {
+
+      var indexAxis = "y"; 
+      var yAxis = {
+        ticks: {
+          beginAtZero: true,
+        },
+      };
+      var xAxis = {
+        max: 3,
+        min: 0,
+        ticks: {
+          callback: function (value) {
+            if (value === 0) {
+              return "0";
+            } else if (value === 1) {
+              return "niedrig";
+            } else if (value === 2) {
+              return "mittel";
+            } else if (value === 3) {
+              return "hoch";
+            }
+          },
+          stepSize: 1,
+          autoSkip: false,
+          beginAtZero: true,
+        },
+      };
+
+    }else{
+        
+       var indexAxis = "x";
+        var yAxis = {
+          max: 3,
+          min: 0,
+          ticks: {
+            callback: function (value) {
+              if (value === 0) {
+                return "0";
+              } else if (value === 1) {
+                return "niedrig";
+              } else if (value === 2) {
+                return "mittel";
+              } else if (value === 3) {
+                return "hoch";
+              }
+            },
+            stepSize: 1,
+            autoSkip: false,
+            beginAtZero: true,
+          },
+        };
+        var xAxis = {
+          ticks: {
+            beginAtZero: true,
+          },
+        };
+    }
+
+
+    chartDiv.style.height = imageGrid.clientHeight + "px";
 
     const ctx = document.createElement("canvas");
     ctx.id = "myChart";
-    ctx.height = height;
+    ctx.style.height = "100%";
     chartDiv.innerHTML = "";
     chartDiv.appendChild(ctx);
 
@@ -302,33 +358,12 @@ updateRenders: (borderCon, poolType) => {
         ],
       },
       options: {
-        indexAxis: "y",
+        responive: true,
+        maintainAspectRatio: false,
+        indexAxis: indexAxis,
         scales: {
-          y: {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-          x: {
-            max: 3,
-            min: 0,
-            ticks: {
-              callback: function (value) {
-                if (value === 0) {
-                  return "0";
-                } else if (value === 1) {
-                  return "niedrig";
-                } else if (value === 2) {
-                  return "mittel";
-                } else if (value === 3) {
-                  return "hoch";
-                }
-              },
-              stepSize: 1,
-              autoSkip: false,
-              beginAtZero: true,
-            },
-          },
+          y: yAxis,
+          x: xAxis,
         },
         plugins: {
           legend: {
@@ -359,4 +394,9 @@ updateRenders: (borderCon, poolType) => {
     chart.data.datasets[0].barThickness = barThickness;
     chart.update();
   },
+
+
+
+
+
 };
